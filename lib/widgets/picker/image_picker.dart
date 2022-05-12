@@ -6,7 +6,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 import '../../configs/image_picker_configs.dart';
@@ -167,7 +166,7 @@ class _ImagePickerState extends State<ImagePicker>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
 
     // Setting preview screen mode from configuration
     if (widget.configs != null) _configs = widget.configs!;
@@ -188,7 +187,7 @@ class _ImagePickerState extends State<ImagePicker>
     );
 
     // Init camera or album
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (_mode == PickerMode.Camera) {
         await _initPhotoCapture();
       } else {
@@ -199,7 +198,7 @@ class _ImagePickerState extends State<ImagePicker>
 
   @override
   void dispose() {
-    WidgetsBinding.instance?.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     _exposureModeControlRowAnimationController.dispose();
     _controller?.dispose();
     _controller = null;
@@ -998,8 +997,8 @@ class _ImagePickerState extends State<ImagePicker>
       for (final a in _albums) {
         final f = await (await a.getAssetListRange(start: 0, end: 1))
             .first
-            .thumbDataWithSize(
-                _configs.albumThumbWidth, _configs.albumThumbHeight);
+            .thumbnailDataWithSize(ThumbnailSize(
+                _configs.albumThumbWidth, _configs.albumThumbHeight));
         ret.add(f);
       }
       _albumThumbnails = ret;
@@ -1128,17 +1127,37 @@ class _ImagePickerState extends State<ImagePicker>
                         content: Text(_configs.textConfirmDelete),
                         actions: <Widget>[
                           TextButton(
-                            child: Text(_configs.textNo),
+                            style: TextButton.styleFrom(
+                              primary: Colors.black87,
+                              minimumSize: const Size(88, 36),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(2)),
+                              ),
+                            ),
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
+                            child: Text(_configs.textNo),
                           ),
                           TextButton(
-                            child: Text(_configs.textYes),
+                            style: TextButton.styleFrom(
+                              primary: Colors.black87,
+                              minimumSize: const Size(88, 36),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(2)),
+                              ),
+                            ),
                             onPressed: () {
                               Navigator.of(context).pop();
                               _removeImage(index);
                             },
+                            child: Text(_configs.textYes),
                           ),
                         ],
                       );

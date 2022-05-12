@@ -102,26 +102,27 @@ class _ImageViewerState extends State<ImageViewer>
                   int compressQuality = 90,
                   ImagePickerConfigs? configs}) async =>
               ImageCropper().cropImage(
-                  sourcePath: file.path,
-                  compressQuality: compressQuality,
-                  maxWidth: maxWidth,
-                  maxHeight: maxHeight,
-                  aspectRatioPresets: [
-                    CropAspectRatioPreset.square,
-                    CropAspectRatioPreset.ratio3x2,
-                    CropAspectRatioPreset.original,
-                    CropAspectRatioPreset.ratio4x3,
-                    CropAspectRatioPreset.ratio16x9
-                  ],
-                  androidUiSettings: AndroidUiSettings(
+                sourcePath: file.path,
+                compressQuality: compressQuality,
+                maxWidth: maxWidth,
+                maxHeight: maxHeight,
+                aspectRatioPresets: [
+                  CropAspectRatioPreset.square,
+                  CropAspectRatioPreset.ratio3x2,
+                  CropAspectRatioPreset.original,
+                  CropAspectRatioPreset.ratio4x3,
+                  CropAspectRatioPreset.ratio16x9
+                ],
+                uiSettings: [
+                  IOSUiSettings(minimumAspectRatio: 1),
+                  AndroidUiSettings(
                       toolbarTitle: title,
                       toolbarColor: toolbarColor,
                       toolbarWidgetColor: toolbarWidgetColor,
                       initAspectRatio: CropAspectRatioPreset.original,
-                      lockAspectRatio: false),
-                  iosUiSettings: const IOSUiSettings(
-                    minimumAspectRatio: 1,
-                  )));
+                      lockAspectRatio: false)
+                ],
+              ).then((value) => File(value!.path)));
     }
     if (_configs.adjustFeatureEnabled) {
       imageEditors[_configs.textImageEditTitle] = EditorParams(
@@ -275,13 +276,32 @@ class _ImageViewerState extends State<ImageViewer>
                               content: Text(_configs.textConfirmDelete),
                               actions: <Widget>[
                                 TextButton(
-                                  child: Text(_configs.textNo),
+                                  style: TextButton.styleFrom(
+                                    primary: Colors.black87,
+                                    minimumSize: const Size(88, 36),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(2)),
+                                    ),
+                                  ),
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
+                                  child: Text(_configs.textNo),
                                 ),
                                 TextButton(
-                                  child: Text(_configs.textYes),
+                                  style: TextButton.styleFrom(
+                                    primary: Colors.black87,
+                                    minimumSize: const Size(88, 36),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(2)),
+                                    ),
+                                  ),
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                     setState(() {
@@ -296,6 +316,7 @@ class _ImageViewerState extends State<ImageViewer>
                                       widget.onChanged?.call(_images);
                                     });
                                   },
+                                  child: Text(_configs.textYes),
                                 ),
                               ],
                             );
