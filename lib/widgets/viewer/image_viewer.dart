@@ -4,7 +4,6 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -46,7 +45,7 @@ class ImageViewer extends StatefulWidget {
   /// Configuration
   final ImagePickerConfigs? configs;
 
-  /// Callbac called when viewed images are changed.
+  /// Callback called when viewed images are changed.
   final Function(dynamic)? onChanged;
 
   @override
@@ -407,6 +406,7 @@ class _ImageViewerState extends State<ImageViewer>
       widget.onChanged?.call(_images);
       return;
     });
+    return null;
   }
 
   /// Build reorderable selected image list.
@@ -475,8 +475,9 @@ class _ImageViewerState extends State<ImageViewer>
       // Get detected objects
       if (_configs.labelDetectFunc != null &&
           (retImg.recognitions?.isEmpty ?? true)) {
-        final objs = await _configs.labelDetectFunc!.call(retImg.modifiedPath);
-        if (objs.isNotEmpty) retImg.recognitions = objs;
+        final _objects =
+            await _configs.labelDetectFunc!.call(retImg.modifiedPath);
+        if (_objects.isNotEmpty) retImg.recognitions = _objects;
       }
 
       // Get OCR from image
@@ -530,8 +531,7 @@ class _ImageViewerState extends State<ImageViewer>
                                       border: Border.all(
                                           color: isSelected
                                               ? Colors.white
-                                              : Colors.grey,
-                                          width: 1),
+                                              : Colors.grey),
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(10))),
                                   padding: const EdgeInsets.symmetric(
@@ -558,7 +558,7 @@ class _ImageViewerState extends State<ImageViewer>
         });
   }
 
-  /// Build widget for displaying OCR informations
+  /// Build widget for displaying OCR information
   Widget _buildOCRTextView(BuildContext context) {
     final image = _images[_currentIndex ?? 0];
     return Stack(

@@ -45,7 +45,7 @@ class ImagePicker extends StatefulWidget {
   const ImagePicker(
       {final Key? key,
       this.maxCount = 10,
-      this.isFullscreenImage = false,
+      this.isFullScreenImage = false,
       this.isCaptureFirst = true,
       this.configs})
       : super(key: key);
@@ -53,8 +53,8 @@ class ImagePicker extends StatefulWidget {
   /// Max selecting count
   final int maxCount;
 
-  /// Default for capturing new image in fullscreen mode or preview mode
-  final bool isFullscreenImage;
+  /// Default for capturing new image in fullScreen mode or preview mode
+  final bool isFullScreenImage;
 
   /// Custom configuration, if not provided, plugin will use
   /// default configuration.
@@ -102,7 +102,7 @@ class _ImagePickerState extends State<ImagePicker>
   bool _isOutputCreating = false;
 
   /// Current camera preview mode.
-  bool _isFullscreenImage = false;
+  bool _isFullScreenImage = false;
 
   /// Flag indicating state of image selecting.
   bool _isImageSelectedDone = false;
@@ -171,7 +171,7 @@ class _ImagePickerState extends State<ImagePicker>
     // Setting preview screen mode from configuration
     if (widget.configs != null) _configs = widget.configs!;
     _flashMode = _configs.flashMode;
-    _isFullscreenImage = widget.isFullscreenImage;
+    _isFullScreenImage = widget.isFullScreenImage;
     _mode = (widget.isCaptureFirst && _configs.cameraPickerModeEnabled)
         ? PickerMode.Camera
         : PickerMode.Album;
@@ -718,11 +718,11 @@ class _ImagePickerState extends State<ImagePicker>
       ),
       onPressed: () {
         setState(() {
-          _isFullscreenImage = !_isFullscreenImage;
+          _isFullScreenImage = !_isFullScreenImage;
         });
       },
       child: Icon(
-          _isFullscreenImage
+          _isFullScreenImage
               ? Icons.fullscreen_exit_rounded
               : Icons.fullscreen_rounded,
           color: Colors.white,
@@ -739,7 +739,7 @@ class _ImagePickerState extends State<ImagePicker>
             ? _configs.textSelectedImagesTitle
             : '${_configs.textSelectedImagesTitle}: ';
     return Container(
-      color: ((_mode == PickerMode.Camera) && _isFullscreenImage)
+      color: ((_mode == PickerMode.Camera) && _isFullScreenImage)
           ? _configs.bottomPanelColorInFullscreen
           : _configs.bottomPanelColor,
       padding: const EdgeInsets.all(8),
@@ -1063,6 +1063,7 @@ class _ImagePickerState extends State<ImagePicker>
       _selectedImages.insert(_newIndex, items);
       return;
     });
+    return null;
   }
 
   /// Build reorderable selected image list.
@@ -1354,7 +1355,7 @@ class _ImagePickerState extends State<ImagePicker>
                                     "[_buildCameraControls] takePicture done");
 
                                 Map<String, dynamic>? croppingParams;
-                                if (!_isFullscreenImage) {
+                                if (!_isFullScreenImage) {
                                   croppingParams = <String, dynamic>{};
                                   if (mounted) {
                                     final size = MediaQuery.of(context).size;

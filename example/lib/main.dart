@@ -78,9 +78,9 @@ class MyApp extends StatelessWidget {
     // You can use Google ML Kit or TensorflowLite for this purpose
     configs.labelDetectFunc = (String path) async {
       return <DetectObject>[
-        DetectObject(label: 'dummy1', confidence: 0.75),
-        DetectObject(label: 'dummy2', confidence: 0.75),
-        DetectObject(label: 'dummy3', confidence: 0.75)
+        const DetectObject(label: 'dummy1', confidence: 0.75),
+        const DetectObject(label: 'dummy2', confidence: 0.75),
+        const DetectObject(label: 'dummy3', confidence: 0.75)
       ];
     };
     configs.ocrExtractFunc =
@@ -131,14 +131,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<ImageObject> _imgObjs = [];
+  List<ImageObject> _imgObjects = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
+        // the App.build method, and use it to set our appBar title.
         title: Text(widget.title),
       ),
       body: Center(
@@ -148,11 +148,11 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             GridView.builder(
                 shrinkWrap: true,
-                itemCount: _imgObjs.length,
+                itemCount: _imgObjects.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4, mainAxisSpacing: 2, crossAxisSpacing: 2),
                 itemBuilder: (BuildContext context, int index) {
-                  final image = _imgObjs[index];
+                  final image = _imgObjects[index];
                   return Padding(
                     padding: const EdgeInsets.all(2),
                     child: Image.file(File(image.modifiedPath),
@@ -172,7 +172,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
           if ((objects?.length ?? 0) > 0) {
             setState(() {
-              _imgObjs = objects!;
+              _imgObjects = objects!;
             });
           }
         },

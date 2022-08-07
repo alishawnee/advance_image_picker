@@ -1,10 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:image_editor/image_editor.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
