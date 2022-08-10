@@ -11,6 +11,7 @@ import 'package:photo_manager/photo_manager.dart';
 import '../../configs/done_button_style.dart';
 import '../../configs/image_picker_configs.dart';
 import '../../models/image_object.dart';
+import '../../utils/confirm_dialog.dart';
 import '../../utils/image_utils.dart';
 import '../../utils/log_utils.dart';
 import '../../utils/text_color_on_background.dart';
@@ -418,39 +419,11 @@ class _ImagePickerState extends State<ImagePicker>
         _isImageSelectedDone ||
         _selectedImages.isEmpty) return true;
 
-    return (await showDialog<bool>(
+    return (await showConfirmDialog(
           context: context,
-          builder: (context) => AlertDialog(
-            title: Text(_configs.translations.textConfirm),
-            content: Text(
-                _configs.translations.textConfirmExitWithoutSelectingImages),
-            actions: <Widget>[
-              TextButton(
-                style: TextButton.styleFrom(
-                  primary: Colors.black87,
-                  minimumSize: const Size(88, 36),
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(2)),
-                  ),
-                ),
-                onPressed: () => Navigator.of(context).pop(false),
-                child: Text(_configs.translations.textNo),
-              ),
-              TextButton(
-                style: TextButton.styleFrom(
-                  primary: Colors.black87,
-                  minimumSize: const Size(88, 36),
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(2)),
-                  ),
-                ),
-                onPressed: () => Navigator.of(context).pop(true),
-                child: Text(_configs.translations.textYes),
-              ),
-            ],
-          ),
+          title: _configs.translations.textConfirm,
+          content: _configs.translations.textConfirmExitWithoutSelectingImages,
+          transConfig: _configs.translations,
         )) ??
         false;
   }
@@ -1028,7 +1001,7 @@ class _ImagePickerState extends State<ImagePicker>
                           child: Image.memory(thumbnail, fit: BoxFit.cover)),
                       title: Text(album.name,
                           style: const TextStyle(color: Colors.white)),
-                      subtitle: Text(album.assetCount.toString(),
+                      subtitle: Text(album.assetCountAsync.toString(),
                           style: const TextStyle(color: Colors.grey)),
                       onTap: () async {
                         callback.call(album);
@@ -1118,51 +1091,16 @@ class _ImagePickerState extends State<ImagePicker>
               ),
               onTap: () {
                 if (_configs.showRemoveImageAlert) {
-                  showDialog<void>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      // return object of type Dialog
-                      return AlertDialog(
-                        title: Text(_configs.translations.textConfirm),
-                        content: Text(_configs.translations.textConfirmDelete),
-                        actions: <Widget>[
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              primary: Colors.black87,
-                              minimumSize: const Size(88, 36),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(2)),
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(_configs.translations.textNo),
-                          ),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              primary: Colors.black87,
-                              minimumSize: const Size(88, 36),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(2)),
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              _removeImage(index);
-                            },
-                            child: Text(_configs.translations.textYes),
-                          ),
-                        ],
-                      );
-                    },
-                  );
+                  showConfirmDialog(
+                      context: context,
+                      title: _configs.translations.textConfirm,
+                      content: _configs.translations.textConfirmDelete,
+                      transConfig: _configs.translations,
+                      onConfirm: () {
+                        _removeImage(index);
+                        Navigator.of(context).pop();
+                        return true;
+                      });
                 } else {
                   _removeImage(index);
                 }

@@ -10,6 +10,7 @@ import 'package:photo_view/photo_view_gallery.dart';
 
 import '../../configs/image_picker_configs.dart';
 import '../../models/image_object.dart';
+import '../../utils/confirm_dialog.dart';
 import '../../utils/image_utils.dart';
 import '../common/portrait_mode_mixin.dart';
 import '../editors/editor_params.dart';
@@ -269,62 +270,25 @@ class _ImageViewerState extends State<ImageViewer>
               GestureDetector(
                 onTap: hasImages
                     ? () async {
-                        await showDialog<void>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            // return object of type Dialog.
-                            return AlertDialog(
-                              title: Text(_configs.translations.textConfirm),
-                              content:
-                                  Text(_configs.translations.textConfirmDelete),
-                              actions: <Widget>[
-                                TextButton(
-                                  style: TextButton.styleFrom(
-                                    primary: Colors.black87,
-                                    minimumSize: const Size(88, 36),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16),
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(2)),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text(_configs.translations.textNo),
-                                ),
-                                TextButton(
-                                  style: TextButton.styleFrom(
-                                    primary: Colors.black87,
-                                    minimumSize: const Size(88, 36),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16),
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(2)),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    setState(() {
-                                      final deleteIndex = _currentIndex!;
-                                      if (_images.length > 1) {
-                                        _currentIndex =
-                                            max(_currentIndex! - 1, 0);
-                                      } else {
-                                        _currentIndex = -1;
-                                      }
-                                      _images.removeAt(deleteIndex);
-                                      widget.onChanged?.call(_images);
-                                    });
-                                  },
-                                  child: Text(_configs.translations.textYes),
-                                ),
-                              ],
-                            );
-                          },
-                        );
+                        await showConfirmDialog(
+                            context: context,
+                            title: _configs.translations.textConfirm,
+                            content: _configs.translations.textConfirmDelete,
+                            transConfig: _configs.translations,
+                            onConfirm: () {
+                              Navigator.of(context).pop();
+                              setState(() {
+                                final deleteIndex = _currentIndex!;
+                                if (_images.length > 1) {
+                                  _currentIndex = max(_currentIndex! - 1, 0);
+                                } else {
+                                  _currentIndex = -1;
+                                }
+                                _images.removeAt(deleteIndex);
+                                widget.onChanged?.call(_images);
+                              });
+                              return true;
+                            });
                       }
                     : null,
                 child: Padding(
@@ -364,18 +328,17 @@ class _ImageViewerState extends State<ImageViewer>
               scrollPhysics: const BouncingScrollPhysics(),
               builder: _buildItem,
               itemCount: _images.length,
-              backgroundDecoration: const BoxDecoration(
-                color: Colors.black,
-              ),
+              backgroundDecoration: const BoxDecoration(color: Colors.black),
               pageController: widget.pageController,
               onPageChanged: onPageChanged,
             ),
           ),
           Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: _buildCurrentImageInfoView(context)),
+            top: 0,
+            left: 0,
+            right: 0,
+            child: _buildCurrentImageInfoView(context),
+          ),
           if (_configs.ocrExtractFunc != null)
             Positioned(
                 bottom: 0,
@@ -763,36 +726,20 @@ class _ImageViewerState extends State<ImageViewer>
     return GestureDetector(
       onTap: imageChanged
           ? () async {
-              await showDialog<void>(
-                context: context,
-                builder: (BuildContext context) {
-                  // return object of type Dialog
-                  return AlertDialog(
-                    title: Text(_configs.translations.textConfirm),
-                    content:
-                        Text(_configs.translations.textConfirmResetChanges),
-                    actions: <Widget>[
-                      TextButton(
-                        child: Text(_configs.translations.textNo),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      TextButton(
-                        child: Text(_configs.translations.textYes),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          setState(() {
-                            _images[_currentIndex!].modifiedPath =
-                                _images[_currentIndex!].originalPath;
-                            widget.onChanged?.call(_images);
-                          });
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
+              await showConfirmDialog(
+                  context: context,
+                  title: _configs.translations.textConfirm,
+                  content: _configs.translations.textConfirmResetChanges,
+                  transConfig: _configs.translations,
+                  onConfirm: () {
+                    Navigator.of(context).pop();
+                    setState(() {
+                      _images[_currentIndex!].modifiedPath =
+                          _images[_currentIndex!].originalPath;
+                      widget.onChanged?.call(_images);
+                    });
+                    return true;
+                  });
             }
           : null,
       child: Icon(Icons.replay,

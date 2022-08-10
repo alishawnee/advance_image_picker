@@ -9,7 +9,7 @@ class DoneButtonStyle {
   })  : type = ButtonType.outlinedButton,
         icon = Icons.check;
 
-  /// Use an [OutlinedButton].
+  /// Use an [IconButton].
   DoneButtonStyle.iconButton({
     required this.icon,
     this.doneButtonDisabledBehavior = DoneButtonDisabledBehavior.disabled,
