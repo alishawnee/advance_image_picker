@@ -69,7 +69,7 @@ class _ImageStickerState extends State<ImageSticker>
     _attachedList = [];
     _stickerList = List<int>.generate(34, (index) => index + 1)
         .map((e) => Image.asset(
-              'assets/icon/$e.png',
+              'assets/icon/$e.webp',
               package: 'advance_image_picker',
             ))
         .toList();
