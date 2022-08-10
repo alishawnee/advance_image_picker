@@ -1,10 +1,10 @@
 import 'dart:core';
 
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import '../models/image_object.dart';
 import '../widgets/editors/editor_params.dart';
+import 'camera_configs.dart';
 import 'done_button_style.dart';
 import 'image_quality_config.dart';
 import 'translate_config.dart';
@@ -144,46 +144,8 @@ class ImagePickerConfigs {
   /// Custom sticker paths
   List<String> customStickers = [];
 
-  /// Camera direction setting.
-  ///
-  /// Options:
-  ///
-  /// * null: use all available camera (default)
-  /// * 0: only use front camera
-  /// * 1: only use back camera
-  int? cameraLensDirection;
-
-  /// Show the lens direction toggle icon button.
-  ///
-  /// If you want to show only one camera, you may also want to hide the
-  /// button than enables users switch camera, then set [showLensDirection]
-  /// to false.
-  ///
-  /// If you show just one [cameraLensDirection] and [showLensDirection] is
-  /// true, then the lens direction button is still shown, but disabled.
-  ///
-  /// Defaults to true.
-  bool showLensDirection = true;
-
-  /// Set the default flash mode.
-  ///
-  /// Options:
-  /// * off: Do not use the flash when taking a picture.
-  /// * auto: Device decide whether to flash the camera when taking a picture.
-  /// * always: Always use the flash when taking a picture.
-  /// * torch: In this app treated the same as using always.
-  ///
-  /// Defaults to [FlashMode.auto].
-  FlashMode flashMode = FlashMode.auto;
-
-  /// Show the flash mode icon button.
-  ///
-  /// If you want to set the FlashMode to a certain mode, typically
-  /// [FlashMode.off], and also hide the button than enables users to
-  /// change it, then set [showFlashMode] to false.
-  ///
-  /// Defaults to true.
-  bool showFlashMode = true;
+  /// A property to configure all camera related settings
+  CameraConfigs cameraConfigs = CameraConfigs();
 
   // UI style settings.
 

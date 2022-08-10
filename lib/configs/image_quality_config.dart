@@ -1,5 +1,3 @@
-import 'package:camera/camera.dart';
-
 /// To config the image quality and compression rates
 class ImageQualityConfigs {
   /// To config the image quality and compression rates
@@ -8,7 +6,6 @@ class ImageQualityConfigs {
     this.maxHeight = 1920,
     this.compressQuality = 90,
     this.preProcessingEnabled = true,
-    this.resolutionPreset = ResolutionPreset.high,
   });
 
   /// Max width for output.
@@ -25,11 +22,6 @@ class ImageQualityConfigs {
   ///
   /// Defaults to 90%.
   final int compressQuality;
-
-  /// Resolution setting for camera, such as high, max, medium, low.
-  ///
-  /// Defaults to [ResolutionPreset.high].
-  final ResolutionPreset resolutionPreset;
 
   /// Enable this option allow image pre-processing, such as cropping,
   /// ... after inputting

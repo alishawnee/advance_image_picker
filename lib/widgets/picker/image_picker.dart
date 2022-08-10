@@ -172,7 +172,7 @@ class _ImagePickerState extends State<ImagePicker>
 
     // Setting preview screen mode from configuration
     if (widget.configs != null) _configs = widget.configs!;
-    _flashMode = _configs.flashMode;
+    _flashMode = _configs.cameraConfigs.flashMode;
     _isFullScreenImage = widget.isFullScreenImage;
     _mode = (widget.isCaptureFirst && _configs.cameraPickerModeEnabled)
         ? PickerMode.Camera
@@ -241,8 +241,8 @@ class _ImagePickerState extends State<ImagePicker>
 
       // Select new camera for capturing.
       if (_cameras.isNotEmpty) {
-        final CameraDescription? newDescription = _getCamera(
-            _cameras, _getCameraDirection(_configs.cameraLensDirection));
+        final CameraDescription? newDescription = _getCamera(_cameras,
+            _getCameraDirection(_configs.cameraConfigs.cameraLensDirection));
         if (newDescription != null) {
           await _onNewCameraSelected(newDescription);
         }
@@ -289,7 +289,7 @@ class _ImagePickerState extends State<ImagePicker>
       // After initialized, setting zoom & exposure values
       await Future.wait([
         cameraController.lockCaptureOrientation(DeviceOrientation.portraitUp),
-        cameraController.setFlashMode(_configs.flashMode),
+        cameraController.setFlashMode(_configs.cameraConfigs.flashMode),
         cameraController
             .getMinExposureOffset()
             .then((value) => _minAvailableExposureOffset = value),
@@ -323,7 +323,7 @@ class _ImagePickerState extends State<ImagePicker>
     }
     final CameraController cameraController = CameraController(
       cameraDescription,
-      _configs.imageConfigs.resolutionPreset,
+      _configs.cameraConfigs.resolutionPreset,
       enableAudio: false,
       imageFormatGroup: ImageFormatGroup.jpeg,
     );
@@ -1282,8 +1282,8 @@ class _ImagePickerState extends State<ImagePicker>
   Widget _buildCameraControls(BuildContext context) {
     final isMaxCount = _selectedImages.length >= widget.maxCount;
 
-    final canSwitchCamera =
-        _cameras.length > 1 && _configs.cameraLensDirection == null;
+    final canSwitchCamera = _cameras.length > 1 &&
+        _configs.cameraConfigs.cameraLensDirection == null;
 
     return _mode == PickerMode.Camera
         ? Container(
@@ -1292,7 +1292,7 @@ class _ImagePickerState extends State<ImagePicker>
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  if (_configs.showFlashMode)
+                  if (_configs.cameraConfigs.showFlashMode)
                     GestureDetector(
                       child: Icon(_flashModeIcon(_flashMode),
                           size: 32, color: Colors.white),
@@ -1401,7 +1401,8 @@ class _ImagePickerState extends State<ImagePicker>
                         color: !isMaxCount ? Colors.white : Colors.grey),
                   ),
                   GestureDetector(
-                    onTap: canSwitchCamera && _configs.showLensDirection
+                    onTap: canSwitchCamera &&
+                            _configs.cameraConfigs.showLensDirection
                         ? () async {
                             final lensDirection =
                                 _cameraController!.description.lensDirection;
@@ -1420,7 +1421,7 @@ class _ImagePickerState extends State<ImagePicker>
                         : null,
                     child: Icon(Icons.switch_camera,
                         size: 32,
-                        color: _configs.showLensDirection
+                        color: _configs.cameraConfigs.showLensDirection
                             ? (canSwitchCamera ? Colors.white : Colors.grey)
                             : Colors.transparent),
                   )
