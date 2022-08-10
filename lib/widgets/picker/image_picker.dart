@@ -13,8 +13,8 @@ import '../../configs/image_picker_configs.dart';
 import '../../models/image_object.dart';
 import '../../utils/image_utils.dart';
 import '../../utils/log_utils.dart';
+import '../../utils/text_color_on_background.dart';
 import '../common/portrait_mode_mixin.dart';
-import '../common/text_color_on_background.dart';
 import '../viewer/image_viewer.dart';
 import 'media_album.dart';
 
@@ -28,7 +28,7 @@ class PickerMode {
 
   /// Album picker.
   // TODO(rydmike): This const property name does not conform to Dart standards,
-  //   but fixing it is a breaking change, thus not changed yet.
+  // but fixing it is a breaking change, thus not changed yet.
   // ignore: constant_identifier_names
   static const int Album = 1;
 }
@@ -83,7 +83,7 @@ class _ImagePickerState extends State<ImagePicker>
   int _mode = PickerMode.Camera;
 
   /// Camera controller
-  CameraController? _controller;
+  CameraController? _cameraController;
 
   /// Scroll controller for selecting images screen.
   final _scrollController = ScrollController();
@@ -202,8 +202,8 @@ class _ImagePickerState extends State<ImagePicker>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _exposureModeControlRowAnimationController.dispose();
-    _controller?.dispose();
-    _controller = null;
+    _cameraController?.dispose();
+    _cameraController = null;
     _cameras.clear();
     _albums.clear();
     _albumThumbnails.clear();
@@ -214,7 +214,7 @@ class _ImagePickerState extends State<ImagePicker>
   /// returns the app to the foreground.
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    final CameraController? cameraController = _controller;
+    final CameraController? cameraController = _cameraController;
 
     // App state changed before we got the chance to initialize.
     if (cameraController == null || !cameraController.value.isInitialized) {
@@ -279,7 +279,7 @@ class _ImagePickerState extends State<ImagePicker>
   /// Initialize current selected camera
   void _initCameraController() {
     // Create future object for initializing new camera controller.
-    final cameraController = _controller!;
+    final cameraController = _cameraController!;
     _initializeControllerFuture =
         cameraController.initialize().then((value) async {
       LogUtils.log("[_onNewCameraSelected] cameraController initialized.");
@@ -318,8 +318,8 @@ class _ImagePickerState extends State<ImagePicker>
     LogUtils.log("[_onNewCameraSelected] start");
 
     // Dispose old then create new camera controller
-    if (_controller != null) {
-      await _controller!.dispose();
+    if (_cameraController != null) {
+      await _cameraController!.dispose();
     }
     final CameraController cameraController = CameraController(
       cameraDescription,
@@ -327,13 +327,13 @@ class _ImagePickerState extends State<ImagePicker>
       enableAudio: false,
       imageFormatGroup: ImageFormatGroup.jpeg,
     );
-    _controller = cameraController;
+    _cameraController = cameraController;
 
     // Init selected camera
     _initCameraController();
 
     // If the controller is updated then update the UI.
-    _controller!.addListener(() {
+    _cameraController!.addListener(() {
       if (mounted) setState(() {});
       if (cameraController.value.hasError) {
         LogUtils.log('Camera error ${cameraController.value.errorDescription}');
@@ -691,7 +691,8 @@ class _ImagePickerState extends State<ImagePicker>
         padding: const EdgeInsets.all(4),
         shape: const CircleBorder(),
       ),
-      onPressed: _controller != null ? _onExposureModeButtonPressed : null,
+      onPressed:
+          _cameraController != null ? _onExposureModeButtonPressed : null,
       child: const Icon(Icons.exposure, color: Colors.white, size: 40),
     );
   }
@@ -842,7 +843,7 @@ class _ImagePickerState extends State<ImagePicker>
     LogUtils.log("[_buildCameraPreview] start");
 
     final size = MediaQuery.of(context).size;
-    if (_controller?.value == null || _isDisposed) {
+    if (_cameraController?.value == null || _isDisposed) {
       return SizedBox(
           width: size.width,
           height: size.height,
@@ -854,16 +855,16 @@ class _ImagePickerState extends State<ImagePicker>
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return (_controller?.value.isInitialized ?? false)
+            return (_cameraController?.value.isInitialized ?? false)
                 ? SizedBox(
                     width: size.width,
                     height: size.height,
                     child: AspectRatio(
-                        aspectRatio: _controller!.value.aspectRatio,
+                        aspectRatio: _cameraController!.value.aspectRatio,
                         child: Listener(
                             onPointerDown: (_) => _pointers++,
                             onPointerUp: (_) => _pointers--,
-                            child: CameraPreview(_controller!, child:
+                            child: CameraPreview(_cameraController!, child:
                                 LayoutBuilder(builder: (BuildContext context,
                                     BoxConstraints constraints) {
                               return GestureDetector(
@@ -882,11 +883,11 @@ class _ImagePickerState extends State<ImagePicker>
 
   /// Tap event on camera preview.
   void _onViewFinderTap(TapDownDetails details, BoxConstraints constraints) {
-    if (_controller == null) {
+    if (_cameraController == null) {
       return;
     }
 
-    final CameraController cameraController = _controller!;
+    final CameraController cameraController = _cameraController!;
 
     final offset = Offset(
       details.localPosition.dx / constraints.maxWidth,
@@ -904,14 +905,14 @@ class _ImagePickerState extends State<ImagePicker>
   /// Handle scale updated event.
   Future<void> _handleScaleUpdate(ScaleUpdateDetails details) async {
     // When there are not exactly two fingers on screen don't scale.
-    if (_controller == null || _pointers != 2) {
+    if (_cameraController == null || _pointers != 2) {
       return;
     }
 
     final double scale = (_baseScale * details.scale)
         .clamp(_minAvailableZoom, _maxAvailableZoom);
 
-    await _controller!.setZoomLevel(scale);
+    await _cameraController!.setZoomLevel(scale);
 
     setState(() {
       _currentScale = scale;
@@ -1301,7 +1302,7 @@ class _ImagePickerState extends State<ImagePicker>
                         // Cycle to next flash mode.
                         _cycleFlashMode();
                         // Update camera to new flash mode.
-                        await _controller!
+                        await _cameraController!
                             .setFlashMode(_flashMode)
                             .then((value) => setState(() {}));
                       },
@@ -1328,7 +1329,7 @@ class _ImagePickerState extends State<ImagePicker>
                           }
                         : null,
                     onTap: (!isMaxCount &&
-                            !(_controller?.value.isTakingPicture ?? true))
+                            !(_cameraController?.value.isTakingPicture ?? true))
                         ? () async {
                             LogUtils.log(
                                 "[_buildCameraControls] capture pressed");
@@ -1336,7 +1337,8 @@ class _ImagePickerState extends State<ImagePicker>
                             // Ensure that the camera is initialized.
                             await _initializeControllerFuture;
 
-                            if (!(_controller?.value.isTakingPicture ?? true)) {
+                            if (!(_cameraController?.value.isTakingPicture ??
+                                true)) {
                               try {
                                 // Scroll to end of list.
                                 await _scrollController.animateTo(
@@ -1348,7 +1350,8 @@ class _ImagePickerState extends State<ImagePicker>
                                 );
 
                                 // Take new picture.
-                                final file = await _controller!.takePicture();
+                                final file =
+                                    await _cameraController!.takePicture();
                                 LogUtils.log(
                                     "[_buildCameraControls] takePicture done");
 
@@ -1401,7 +1404,7 @@ class _ImagePickerState extends State<ImagePicker>
                     onTap: canSwitchCamera && _configs.showLensDirection
                         ? () async {
                             final lensDirection =
-                                _controller!.description.lensDirection;
+                                _cameraController!.description.lensDirection;
                             final CameraDescription? newDescription =
                                 _getCamera(
                                     _cameras,
@@ -1470,15 +1473,15 @@ class _ImagePickerState extends State<ImagePicker>
 
   /// Build exposure mode control widget.
   Widget _exposureModeControlRowWidget() {
-    if (_controller?.value == null) return const SizedBox();
+    if (_cameraController?.value == null) return const SizedBox();
 
     final ButtonStyle styleAuto = TextButton.styleFrom(
-      primary: _controller?.value.exposureMode == ExposureMode.auto
+      primary: _cameraController?.value.exposureMode == ExposureMode.auto
           ? Colors.orange
           : Colors.white,
     );
     final ButtonStyle styleLocked = TextButton.styleFrom(
-      primary: _controller?.value.exposureMode == ExposureMode.locked
+      primary: _cameraController?.value.exposureMode == ExposureMode.locked
           ? Colors.orange
           : Colors.white,
     );
@@ -1500,20 +1503,20 @@ class _ImagePickerState extends State<ImagePicker>
                   const SizedBox(width: 8),
                   TextButton(
                     style: styleAuto,
-                    onPressed: _controller != null
+                    onPressed: _cameraController != null
                         ? () =>
                             _onSetExposureModeButtonPressed(ExposureMode.auto)
                         : null,
                     onLongPress: () {
-                      if (_controller != null) {
-                        _controller!.setExposurePoint(null);
+                      if (_cameraController != null) {
+                        _cameraController!.setExposurePoint(null);
                       }
                     },
                     child: Text(_configs.translations.textExposureAuto),
                   ),
                   TextButton(
                     style: styleLocked,
-                    onPressed: _controller != null
+                    onPressed: _cameraController != null
                         ? () =>
                             _onSetExposureModeButtonPressed(ExposureMode.locked)
                         : null,
@@ -1559,12 +1562,12 @@ class _ImagePickerState extends State<ImagePicker>
 
   /// Set exposure mode button.
   Future<void> _setExposureMode(ExposureMode mode) async {
-    if (_controller == null) {
+    if (_cameraController == null) {
       return;
     }
 
     try {
-      await _controller!.setExposureMode(mode);
+      await _cameraController!.setExposureMode(mode);
     } on CameraException catch (_) {
       rethrow;
     }
@@ -1572,7 +1575,7 @@ class _ImagePickerState extends State<ImagePicker>
 
   /// Set exposure offset.
   Future<void> _setExposureOffset(double offset) async {
-    if (_controller == null) {
+    if (_cameraController == null) {
       return;
     }
 
@@ -1581,7 +1584,7 @@ class _ImagePickerState extends State<ImagePicker>
     });
     try {
       // The return value is not used or needed, let's no assign it to offset.
-      await _controller!.setExposureOffset(offset);
+      await _cameraController!.setExposureOffset(offset);
     } on CameraException catch (_) {
       rethrow;
     }
