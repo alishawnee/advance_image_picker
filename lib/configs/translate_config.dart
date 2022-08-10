@@ -3,7 +3,7 @@
 /// one argument `message` of type `IPMessage(Enum)`.
 class TranslationConfigs {
   /// Used to config all the translation messages of this package
-  TranslationConfigs(this.translateFunc);
+  TranslationConfigs();
 
   /// UI labels translated function with 2 parameters
   /// `label` and `defaultTranslation`
@@ -28,8 +28,9 @@ class TranslationConfigs {
   /// or you can just return the default translation like this:
   ///
   /// `configs.translations.translateFunc = (_, defaultTranslation)
-  /// => defaultTranslation;`
-  String Function(String label, String defaultTranslation) translateFunc;
+  /// => defaultTranslation;` (the default)
+  String Function(String label, String defaultTranslation) translateFunc =
+      (_, defaultTranslation) => defaultTranslation;
 
   // UI label strings (for localization)
 

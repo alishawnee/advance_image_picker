@@ -9,8 +9,6 @@ import 'done_button_style.dart';
 import 'image_quality_config.dart';
 import 'translate_config.dart';
 
-export 'package:camera/camera.dart' show FlashMode;
-
 /// Global configuration for flutter app using advance_image_picker plugin
 /// Call once inside application before using image picker functions
 ///
@@ -206,5 +204,5 @@ class ImagePickerConfigs {
   Map<String, EditorParams> externalImageEditors = {};
 
   /// The translation Configuration of the messages used in the package
-  late TranslationConfigs translations;
+  TranslationConfigs translations = TranslationConfigs();
 }
