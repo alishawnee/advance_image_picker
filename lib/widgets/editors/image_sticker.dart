@@ -150,7 +150,7 @@ class _ImageStickerState extends State<ImageSticker>
             child: Center(
                 child: Padding(
               padding: const EdgeInsets.all(8),
-              child: Text(_configs.textImageStickerGuide,
+              child: Text(_configs.translations.textImageStickerGuide,
                   style: const TextStyle(color: Colors.white)),
             ))),
         Positioned(

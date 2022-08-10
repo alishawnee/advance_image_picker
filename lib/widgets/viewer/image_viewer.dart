@@ -84,13 +84,16 @@ class _ImageViewerState extends State<ImageViewer>
 
   /// Build image editor controls
   List<Widget> _buildImageEditorControls(
-      BuildContext context, Color toolbarColor, Color toolbarWidgetColor) {
+    BuildContext context,
+    Color toolbarColor,
+    Color toolbarWidgetColor,
+  ) {
     final Map<String, EditorParams> imageEditors = {};
 
     // Add preset image editors
     if (_configs.cropFeatureEnabled) {
-      imageEditors[_configs.textImageCropTitle] = EditorParams(
-          title: _configs.textImageCropTitle,
+      imageEditors[_configs.translations.textImageCropTitle] = EditorParams(
+          title: _configs.translations.textImageCropTitle,
           icon: Icons.crop_rotate,
           onEditorEvent: (
                   {required BuildContext context,
@@ -124,8 +127,8 @@ class _ImageViewerState extends State<ImageViewer>
               ).then((value) => File(value!.path)));
     }
     if (_configs.adjustFeatureEnabled) {
-      imageEditors[_configs.textImageEditTitle] = EditorParams(
-          title: _configs.textImageEditTitle,
+      imageEditors[_configs.translations.textImageEditTitle] = EditorParams(
+          title: _configs.translations.textImageEditTitle,
           icon: Icons.wb_sunny_outlined,
           onEditorEvent: (
                   {required BuildContext context,
@@ -145,8 +148,8 @@ class _ImageViewerState extends State<ImageViewer>
                       configs: _configs))));
     }
     if (_configs.filterFeatureEnabled) {
-      imageEditors[_configs.textImageFilterTitle] = EditorParams(
-          title: _configs.textImageFilterTitle,
+      imageEditors[_configs.translations.textImageFilterTitle] = EditorParams(
+          title: _configs.translations.textImageFilterTitle,
           icon: Icons.auto_awesome,
           onEditorEvent: (
                   {required BuildContext context,
@@ -166,8 +169,8 @@ class _ImageViewerState extends State<ImageViewer>
                       configs: _configs))));
     }
     if (_configs.stickerFeatureEnabled) {
-      imageEditors[_configs.textImageStickerTitle] = EditorParams(
-          title: _configs.textImageStickerTitle,
+      imageEditors[_configs.translations.textImageStickerTitle] = EditorParams(
+          title: _configs.translations.textImageStickerTitle,
           icon: Icons.insert_emoticon_rounded,
           onEditorEvent: (
                   {required BuildContext context,
@@ -201,8 +204,8 @@ class _ImageViewerState extends State<ImageViewer>
                     context: context,
                     file: image,
                     title: e.title,
-                    maxWidth: _configs.maxWidth,
-                    maxHeight: _configs.maxHeight,
+                    maxWidth: _configs.imageConfigs.maxWidth,
+                    maxHeight: _configs.imageConfigs.maxHeight,
                     configs: _configs);
                 if (outputFile != null) {
                   setState(() {
@@ -219,9 +222,9 @@ class _ImageViewerState extends State<ImageViewer>
   Future<File> _imagePreProcessing(String? path) async {
     if (_configs.imagePreProcessingBeforeEditingEnabled) {
       return ImageUtils.compressResizeImage(path!,
-          maxWidth: _configs.maxWidth,
-          maxHeight: _configs.maxHeight,
-          quality: _configs.compressQuality);
+          maxWidth: _configs.imageConfigs.maxWidth,
+          maxHeight: _configs.imageConfigs.maxHeight,
+          quality: _configs.imageConfigs.compressQuality);
     }
     return File(path!);
   }
@@ -271,8 +274,9 @@ class _ImageViewerState extends State<ImageViewer>
                           builder: (BuildContext context) {
                             // return object of type Dialog.
                             return AlertDialog(
-                              title: Text(_configs.textConfirm),
-                              content: Text(_configs.textConfirmDelete),
+                              title: Text(_configs.translations.textConfirm),
+                              content:
+                                  Text(_configs.translations.textConfirmDelete),
                               actions: <Widget>[
                                 TextButton(
                                   style: TextButton.styleFrom(
@@ -288,7 +292,7 @@ class _ImageViewerState extends State<ImageViewer>
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text(_configs.textNo),
+                                  child: Text(_configs.translations.textNo),
                                 ),
                                 TextButton(
                                   style: TextButton.styleFrom(
@@ -315,7 +319,7 @@ class _ImageViewerState extends State<ImageViewer>
                                       widget.onChanged?.call(_images);
                                     });
                                   },
-                                  child: Text(_configs.textYes),
+                                  child: Text(_configs.translations.textYes),
                                 ),
                               ],
                             );
@@ -344,7 +348,7 @@ class _ImageViewerState extends State<ImageViewer>
                   ),
                 ])
               : Center(
-                  child: Text(_configs.textNoImages,
+                  child: Text(_configs.translations.textNoImages,
                       style: const TextStyle(color: Colors.grey))),
         ));
   }
@@ -596,7 +600,7 @@ class _ImageViewerState extends State<ImageViewer>
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 8, horizontal: 12),
                                 child: Row(children: [
-                                  Text(_configs.textEditText,
+                                  Text(_configs.translations.textEditText,
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18)),
@@ -634,7 +638,8 @@ class _ImageViewerState extends State<ImageViewer>
                                               Radius.circular(30)),
                                         ),
                                       ),
-                                      child: Text(_configs.textClear,
+                                      child: Text(
+                                          _configs.translations.textClear,
                                           style: const TextStyle(
                                               color: Colors.red)),
                                       onPressed: () {
@@ -653,7 +658,8 @@ class _ImageViewerState extends State<ImageViewer>
                                               Radius.circular(30)),
                                         ),
                                       ),
-                                      child: Text(_configs.textSave,
+                                      child: Text(
+                                          _configs.translations.textSave,
                                           style: const TextStyle(
                                               color: Colors.white)),
                                       onPressed: () {
@@ -700,7 +706,7 @@ class _ImageViewerState extends State<ImageViewer>
             child: Padding(
               padding: const EdgeInsets.all(8),
               child: Row(children: [
-                Text(_configs.textOCR,
+                Text(_configs.translations.textOCR,
                     style: const TextStyle(color: Colors.white)),
                 if (_isProcessing)
                   const Padding(
@@ -762,17 +768,18 @@ class _ImageViewerState extends State<ImageViewer>
                 builder: (BuildContext context) {
                   // return object of type Dialog
                   return AlertDialog(
-                    title: Text(_configs.textConfirm),
-                    content: Text(_configs.textConfirmResetChanges),
+                    title: Text(_configs.translations.textConfirm),
+                    content:
+                        Text(_configs.translations.textConfirmResetChanges),
                     actions: <Widget>[
                       TextButton(
-                        child: Text(_configs.textNo),
+                        child: Text(_configs.translations.textNo),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
                       ),
                       TextButton(
-                        child: Text(_configs.textYes),
+                        child: Text(_configs.translations.textYes),
                         onPressed: () {
                           Navigator.of(context).pop();
                           setState(() {

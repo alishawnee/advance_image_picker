@@ -153,12 +153,12 @@ class _ImageEditState extends State<ImageEdit>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                      "${_configs.textContrast}: "
+                      "${_configs.translations.textContrast}: "
                       "${_contrast.toString()}",
                       style: textStyle),
-                  Text("${_configs.textBrightness}: ${_brightness.toString()}",
+                  Text("${_configs.translations.textBrightness}: $_brightness",
                       style: textStyle),
-                  Text("${_configs.textSaturation}: ${_saturation.toString()}",
+                  Text("${_configs.translations.textSaturation}: $_saturation",
                       style: textStyle),
                   const Icon(Icons.keyboard_arrow_up)
                 ])),
@@ -267,7 +267,7 @@ class _ImageEditState extends State<ImageEdit>
       padding: const EdgeInsets.all(8),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          Text(_configs.textContrast, style: textStyle),
+          Text(_configs.translations.textContrast, style: textStyle),
           const Spacer(),
           Text(_contrast.toString(), style: textStyle)
         ]),
@@ -303,7 +303,7 @@ class _ImageEditState extends State<ImageEdit>
       padding: const EdgeInsets.all(8),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          Text(_configs.textBrightness, style: textStyle),
+          Text(_configs.translations.textBrightness, style: textStyle),
           const Spacer(),
           Text(_brightness.toString(), style: textStyle)
         ]),
@@ -339,7 +339,7 @@ class _ImageEditState extends State<ImageEdit>
       padding: const EdgeInsets.all(8),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          Text(_configs.textSaturation, style: textStyle),
+          Text(_configs.translations.textSaturation, style: textStyle),
           const Spacer(),
           Text(_saturation.toString(), style: textStyle)
         ]),
