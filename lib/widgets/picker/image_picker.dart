@@ -8,11 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:photo_manager/photo_manager.dart';
 
-import '../../configs/done_button_style.dart';
-import '../../configs/image_picker_configs.dart';
-import '../../models/image_object.dart';
+import '../../advance_image_picker.dart';
 import '../../utils/confirm_dialog.dart';
-import '../../utils/image_utils.dart';
 import '../../utils/log_utils.dart';
 import '../../utils/text_color_on_background.dart';
 import '../common/portrait_mode_mixin.dart';
@@ -421,9 +418,9 @@ class _ImagePickerState extends State<ImagePicker>
 
     return (await showConfirmDialog(
           context: context,
-          title: _configs.translations.textConfirm,
-          content: _configs.translations.textConfirmExitWithoutSelectingImages,
-          transConfig: _configs.translations,
+          title: IPMessage.confirm,
+          content: IPMessage.exitWithoutSelecting,
+          configs: _configs,
         )) ??
         false;
   }
@@ -569,7 +566,7 @@ class _ImagePickerState extends State<ImagePicker>
               ),
               child: Row(
                 children: [
-                  Text(_configs.translations.textSelectButtonTitle,
+                  Text(_configs.tr(IPMessage.selectButtonTitle),
                       style: TextStyle(
                           color: _selectedImages.isNotEmpty
                               ? textColorBasedOnBG(
@@ -707,9 +704,9 @@ class _ImagePickerState extends State<ImagePicker>
     // Add leading text and colon+blank, only if 'textSelectedImagesTitle' is
     // not blank in a none breaking way to previous version.
     final String _textSelectedImagesTitle =
-        _configs.translations.textSelectedImagesTitle == ''
-            ? _configs.translations.textSelectedImagesTitle
-            : '${_configs.translations.textSelectedImagesTitle}: ';
+        _configs.tr(IPMessage.selectImagesTitle) == ''
+            ? _configs.tr(IPMessage.selectImagesTitle)
+            : '${_configs.tr(IPMessage.selectImagesTitle)}: ';
     return Container(
       color: ((_mode == PickerMode.Camera) && _isFullScreenImage)
           ? _configs.bottomPanelColorInFullscreen
@@ -722,8 +719,8 @@ class _ImagePickerState extends State<ImagePicker>
               '${_selectedImages.length.toString()}'
               ' / ${widget.maxCount.toString()}',
               style: const TextStyle(color: Colors.white, fontSize: 14)),
-          if (_configs.translations.textSelectedImagesGuide != '')
-            Text(_configs.translations.textSelectedImagesGuide,
+          if (_configs.tr(IPMessage.selectImagesGuide) != '')
+            Text(_configs.tr(IPMessage.selectImagesGuide),
                 style: const TextStyle(color: Colors.grey, fontSize: 14))
         ],
         _buildReorderableSelectedImageList(context),
@@ -739,7 +736,7 @@ class _ImagePickerState extends State<ImagePicker>
   Widget _buildAlbumSelectButton(BuildContext context,
       {bool isPop = false, bool isCameraMode = false}) {
     if (isCameraMode) {
-      return Text(_configs.translations.textCameraTitle,
+      return Text(_configs.tr(IPMessage.cameraTitle),
           style: TextStyle(color: _configs.appBarTextColor, fontSize: 16));
     }
 
@@ -801,10 +798,10 @@ class _ImagePickerState extends State<ImagePicker>
               ),
             ),
             onPressed: _initCameraController,
-            child: Text(_configs.translations.textRequestPermission,
+            child: Text(_configs.tr(IPMessage.requestPermission),
                 style: const TextStyle(color: Colors.black)),
           ),
-          Text(_configs.translations.textRequestCameraPermission,
+          Text(_configs.tr(IPMessage.requestCameraPermission),
               style: const TextStyle(color: Colors.grey))
         ],
       ),
@@ -911,10 +908,10 @@ class _ImagePickerState extends State<ImagePicker>
               ),
             ),
             onPressed: _initPhotoGallery,
-            child: Text(_configs.translations.textRequestPermission,
+            child: Text(_configs.tr(IPMessage.requestPermission),
                 style: const TextStyle(color: Colors.black)),
           ),
-          Text(_configs.translations.textRequestGalleryPermission,
+          Text(_configs.tr(IPMessage.requestGalleryPermission),
               style: const TextStyle(color: Colors.grey))
         ]));
   }
@@ -1093,9 +1090,9 @@ class _ImagePickerState extends State<ImagePicker>
                 if (_configs.showRemoveImageAlert) {
                   showConfirmDialog(
                       context: context,
-                      title: _configs.translations.textConfirm,
-                      content: _configs.translations.textConfirmDelete,
-                      transConfig: _configs.translations,
+                      title: IPMessage.confirm,
+                      content: IPMessage.confirmDelete,
+                      configs: _configs,
                       onConfirm: () {
                         _removeImage(index);
                         Navigator.of(context).pop();
@@ -1141,7 +1138,7 @@ class _ImagePickerState extends State<ImagePicker>
                                   !_configs.imageConfigs.preProcessingEnabled;
 
                               return ImageViewer(
-                                  title: _configs.translations.textPreviewTitle,
+                                  title: _configs.tr(IPMessage.previewTitle),
                                   images: _selectedImages,
                                   initialIndex: i,
                                   configs: _configs,
@@ -1375,14 +1372,14 @@ class _ImagePickerState extends State<ImagePicker>
           backgroundColor: Colors.transparent,
           thumbColor: Colors.transparent,
           children: {
-            0: Text(_configs.translations.textCameraTitle,
+            0: Text(_configs.tr(IPMessage.cameraTitle),
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: (_mode == PickerMode.Camera)
                         ? Colors.white
                         : Colors.grey)),
-            1: Text(_configs.translations.textAlbumTitle,
+            1: Text(_configs.tr(IPMessage.albumTitle),
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -1438,7 +1435,7 @@ class _ImagePickerState extends State<ImagePicker>
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(_configs.translations.textExposure, style: textStyle),
+                  Text(_configs.tr(IPMessage.exposureTitle), style: textStyle),
                   const SizedBox(width: 8),
                   TextButton(
                     style: styleAuto,
@@ -1451,7 +1448,7 @@ class _ImagePickerState extends State<ImagePicker>
                         _cameraController!.setExposurePoint(null);
                       }
                     },
-                    child: Text(_configs.translations.textExposureAuto),
+                    child: Text(_configs.tr(IPMessage.exposureAutoTitle)),
                   ),
                   TextButton(
                     style: styleLocked,
@@ -1459,7 +1456,7 @@ class _ImagePickerState extends State<ImagePicker>
                         ? () =>
                             _onSetExposureModeButtonPressed(ExposureMode.locked)
                         : null,
-                    child: Text(_configs.translations.textExposureLocked),
+                    child: Text(_configs.tr(IPMessage.exposureLockedTitle)),
                   ),
                 ],
               ),

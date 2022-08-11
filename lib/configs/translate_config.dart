@@ -1,3 +1,5 @@
+import 'image_picker_configs.dart';
+
 /// Used to config all the translation messages of this package
 /// UI labels translated configs that requires a function with
 /// one argument `message` of type `IPMessage(Enum)`.
@@ -32,189 +34,8 @@ class TranslationConfigs {
   String Function(String label, String defaultTranslation) translateFunc =
       (_, defaultTranslation) => defaultTranslation;
 
-  // UI label strings (for localization)
-
-  /// Get localized text for label "image_picker_select_images_title".
-  ///
-  /// Defaults to "Selected images count".
-  String get textSelectedImagesTitle =>
-      getTranslatedString(IPMessage.selectImagesTitle);
-
-  /// Get localized text for label "image_picker_select_images_guide".
-  ///
-  /// Defaults to "You can drag images for sorting list...".
-  String get textSelectedImagesGuide =>
-      getTranslatedString(IPMessage.selectImagesGuide);
-
-  /// Get localized text for label "image_picker_camera_title".
-  ///
-  /// Defaults to "Camera".
-  String get textCameraTitle => getTranslatedString(IPMessage.cameraTitle);
-
-  /// Get localized text for label "image_picker_album_title".
-  ///
-  /// Defaults to "Album".
-  String get textAlbumTitle => getTranslatedString(IPMessage.albumTitle);
-
-  /// Get localized text for label "image_picker_preview_title".
-  ///
-  /// Defaults to "Preview".
-  String get textPreviewTitle => getTranslatedString(IPMessage.previewTitle);
-
-  /// Get localized text for label "image_picker_confirm".
-  ///
-  /// Defaults to "Confirm".
-  String get textConfirm => getTranslatedString(IPMessage.confirm);
-
-  /// Get localized text for label "image_picker_exit_without_selecting".
-  ///
-  /// Defaults to "Do you want to exit without selecting images?".
-  String get textConfirmExitWithoutSelectingImages =>
-      getTranslatedString(IPMessage.exitWithoutSelecting);
-
-  /// Get localized text for label "image_picker_confirm_delete".
-  ///
-  /// Defaults to "Do you want to delete this image?".
-  String get textConfirmDelete => getTranslatedString(IPMessage.confirmDelete);
-
-  /// Get localized text for label "image_picker_confirm_reset_changes".
-  ///
-  /// Defaults to "Do you want to clear all changes for this image?".
-  String get textConfirmResetChanges =>
-      getTranslatedString(IPMessage.confirmResetChanges);
-
-  /// Get localized text for label "yes".
-  ///
-  /// Defaults to "Yes".
-  String get textYes => getTranslatedString(IPMessage.yes);
-
-  /// Get localized text for label "no".
-  ///
-  /// Defaults to "No".
-  String get textNo => getTranslatedString(IPMessage.no);
-
-  /// Get localized text for label "save".
-  ///
-  /// Defaults to "Save".
-  String get textSave => getTranslatedString(IPMessage.save);
-
-  /// Get localized text for label "clear".
-  ///
-  /// Defaults to "Clear".
-  String get textClear => getTranslatedString(IPMessage.clear);
-
-  /// Get localized text for label "image_picker_edit_text".
-  ///
-  /// Defaults to "Edit text".
-  String get textEditText => getTranslatedString(IPMessage.editText);
-
-  /// Get localized text for label "image_picker_no_images".
-  ///
-  /// Defaults to "No images ...".
-  String get textNoImages => getTranslatedString(IPMessage.noImages);
-
-  /// Get localized text for label "image_picker_image_crop_title".
-  ///
-  /// Defaults to "Image crop".
-  String get textImageCropTitle =>
-      getTranslatedString(IPMessage.imageCropTitle);
-
-  /// Get localized text for label "image_picker_image_filter_title".
-  ///
-  /// Defaults to "Image filter".
-  String get textImageFilterTitle =>
-      getTranslatedString(IPMessage.imageFilterTitle);
-
-  /// Get localized text for label "image_picker_image_edit_title".
-  ///
-  /// Defaults to "Image edit".
-  String get textImageEditTitle =>
-      getTranslatedString(IPMessage.imageEditTitle);
-
-  /// Get localized text for label "image_picker_image_sticker_title".
-  ///
-  /// Defaults to "Image sticker".
-  String get textImageStickerTitle =>
-      getTranslatedString(IPMessage.imageStickerTitle);
-
-  /// Get localized text for label "image_picker_image_add_text_title".
-  ///
-  /// Defaults to "Image add text".
-  String get textImageAddTextTitle =>
-      getTranslatedString(IPMessage.imageAddTextTitle);
-
-  /// Get localized text for label "image_picker_select_button_title".
-  ///
-  /// Defaults to "Select".
-  String get textSelectButtonTitle =>
-      getTranslatedString(IPMessage.selectButtonTitle);
-
-  /// Get localized text for label "image_picker_image_sticker_guide".
-  ///
-  /// Defaults to "You can click on below icons to add into image, double
-  /// click to remove it from image".
-  String get textImageStickerGuide =>
-      getTranslatedString(IPMessage.imageStickerGuide);
-
-  /// Get localized text for label "image_picker_exposure_title".
-  ///
-  /// Defaults to "Exposure".
-  String get textExposure => getTranslatedString(IPMessage.exposureTitle);
-
-  /// Get localized text for label "image_picker_exposure_locked_title".
-  ///
-  /// Defaults to "Locked".
-  String get textExposureLocked =>
-      getTranslatedString(IPMessage.exposureLockedTitle);
-
-  /// Get localized text for label "image_picker_exposure_auto_title".
-  ///
-  /// Defaults to "auto".
-  String get textExposureAuto =>
-      getTranslatedString(IPMessage.exposureAutoTitle);
-
-  /// Get localized text for label "image_picker_image_edit_contrast".
-  ///
-  /// Defaults to "contrast".
-  String get textContrast => getTranslatedString(IPMessage.imageEditContrast);
-
-  /// Get localized text for label "image_picker_image_edit_brightness".
-  ///
-  /// Defaults to "brightness".
-  String get textBrightness =>
-      getTranslatedString(IPMessage.imageEditBrightness);
-
-  /// Get localized text for label "image_picker_image_edit_saturation".
-  ///
-  /// Defaults to "saturation".
-  String get textSaturation =>
-      getTranslatedString(IPMessage.imageEditSaturation);
-
-  /// Get localized text for label "image_picker_ocr".
-  ///
-  /// Defaults to "OCR".
-  String get textOCR => getTranslatedString(IPMessage.ocr);
-
-  /// Get localized text for label "image_picker_request_permission".
-  ///
-  /// Defaults to "Request Permission".
-  String get textRequestPermission =>
-      getTranslatedString(IPMessage.requestPermission);
-
-  /// Get localized text for label "image_picker_request_camera_permission".
-  ///
-  /// Defaults to "You need allow camera permission.".
-  String get textRequestCameraPermission =>
-      getTranslatedString(IPMessage.requestCameraPermission);
-
-  /// Get localized text for label "image_picker_request_gallery_permission".
-  ///
-  /// Defaults to "You need allow photo gallery permission.".
-  String get textRequestGalleryPermission =>
-      getTranslatedString(IPMessage.requestGalleryPermission);
-
   /// Translate string by translateFunc.
-  String getTranslatedString(IPMessage value) {
+  String _getTranslatedString(IPMessage value) {
     return translateFunc.call(value.name, value.defaultTranslation);
   }
 }
@@ -331,4 +152,13 @@ enum IPMessage {
   /// A enum containing all the messages used in this package
   // ignore: sort_constructors_first
   const IPMessage(this.defaultTranslation);
+}
+
+///
+extension TranslationExtensions on ImagePickerConfigs {
+  /// A function to get the translation of a specific key/message from the
+  /// [translations] property
+  String tr(IPMessage message) {
+    return translations._getTranslatedString(message);
+  }
 }

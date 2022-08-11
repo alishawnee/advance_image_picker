@@ -9,6 +9,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 import '../../configs/image_picker_configs.dart';
+import '../../configs/translate_config.dart';
 import '../../models/image_object.dart';
 import '../../utils/confirm_dialog.dart';
 import '../../utils/image_utils.dart';
@@ -93,8 +94,8 @@ class _ImageViewerState extends State<ImageViewer>
 
     // Add preset image editors
     if (_configs.cropFeatureEnabled) {
-      imageEditors[_configs.translations.textImageCropTitle] = EditorParams(
-          title: _configs.translations.textImageCropTitle,
+      imageEditors[_configs.tr(IPMessage.imageCropTitle)] = EditorParams(
+          title: _configs.tr(IPMessage.imageCropTitle),
           icon: Icons.crop_rotate,
           onEditorEvent: (
                   {required BuildContext context,
@@ -128,8 +129,8 @@ class _ImageViewerState extends State<ImageViewer>
               ).then((value) => File(value!.path)));
     }
     if (_configs.adjustFeatureEnabled) {
-      imageEditors[_configs.translations.textImageEditTitle] = EditorParams(
-          title: _configs.translations.textImageEditTitle,
+      imageEditors[_configs.tr(IPMessage.imageEditTitle)] = EditorParams(
+          title: _configs.tr(IPMessage.imageEditTitle),
           icon: Icons.wb_sunny_outlined,
           onEditorEvent: (
                   {required BuildContext context,
@@ -149,8 +150,8 @@ class _ImageViewerState extends State<ImageViewer>
                       configs: _configs))));
     }
     if (_configs.filterFeatureEnabled) {
-      imageEditors[_configs.translations.textImageFilterTitle] = EditorParams(
-          title: _configs.translations.textImageFilterTitle,
+      imageEditors[_configs.tr(IPMessage.imageFilterTitle)] = EditorParams(
+          title: _configs.tr(IPMessage.imageFilterTitle),
           icon: Icons.auto_awesome,
           onEditorEvent: (
                   {required BuildContext context,
@@ -170,8 +171,8 @@ class _ImageViewerState extends State<ImageViewer>
                       configs: _configs))));
     }
     if (_configs.stickerFeatureEnabled) {
-      imageEditors[_configs.translations.textImageStickerTitle] = EditorParams(
-          title: _configs.translations.textImageStickerTitle,
+      imageEditors[_configs.tr(IPMessage.imageStickerTitle)] = EditorParams(
+          title: _configs.tr(IPMessage.imageStickerTitle),
           icon: Icons.insert_emoticon_rounded,
           onEditorEvent: (
                   {required BuildContext context,
@@ -272,9 +273,9 @@ class _ImageViewerState extends State<ImageViewer>
                     ? () async {
                         await showConfirmDialog(
                             context: context,
-                            title: _configs.translations.textConfirm,
-                            content: _configs.translations.textConfirmDelete,
-                            transConfig: _configs.translations,
+                            title: IPMessage.confirm,
+                            content: IPMessage.confirmDelete,
+                            configs: _configs,
                             onConfirm: () {
                               Navigator.of(context).pop();
                               setState(() {
@@ -312,7 +313,7 @@ class _ImageViewerState extends State<ImageViewer>
                   ),
                 ])
               : Center(
-                  child: Text(_configs.translations.textNoImages,
+                  child: Text(_configs.tr(IPMessage.noImages),
                       style: const TextStyle(color: Colors.grey))),
         ));
   }
@@ -563,7 +564,7 @@ class _ImageViewerState extends State<ImageViewer>
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 8, horizontal: 12),
                                 child: Row(children: [
-                                  Text(_configs.translations.textEditText,
+                                  Text(_configs.tr(IPMessage.editText),
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18)),
@@ -601,8 +602,7 @@ class _ImageViewerState extends State<ImageViewer>
                                               Radius.circular(30)),
                                         ),
                                       ),
-                                      child: Text(
-                                          _configs.translations.textClear,
+                                      child: Text(_configs.tr(IPMessage.clear),
                                           style: const TextStyle(
                                               color: Colors.red)),
                                       onPressed: () {
@@ -621,8 +621,7 @@ class _ImageViewerState extends State<ImageViewer>
                                               Radius.circular(30)),
                                         ),
                                       ),
-                                      child: Text(
-                                          _configs.translations.textSave,
+                                      child: Text(_configs.tr(IPMessage.save),
                                           style: const TextStyle(
                                               color: Colors.white)),
                                       onPressed: () {
@@ -669,7 +668,7 @@ class _ImageViewerState extends State<ImageViewer>
             child: Padding(
               padding: const EdgeInsets.all(8),
               child: Row(children: [
-                Text(_configs.translations.textOCR,
+                Text(_configs.tr(IPMessage.ocr),
                     style: const TextStyle(color: Colors.white)),
                 if (_isProcessing)
                   const Padding(
@@ -728,9 +727,9 @@ class _ImageViewerState extends State<ImageViewer>
           ? () async {
               await showConfirmDialog(
                   context: context,
-                  title: _configs.translations.textConfirm,
-                  content: _configs.translations.textConfirmResetChanges,
-                  transConfig: _configs.translations,
+                  title: IPMessage.confirm,
+                  content: IPMessage.confirmResetChanges,
+                  configs: _configs,
                   onConfirm: () {
                     Navigator.of(context).pop();
                     setState(() {

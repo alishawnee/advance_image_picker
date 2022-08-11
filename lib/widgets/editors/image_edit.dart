@@ -7,6 +7,7 @@ import 'package:image_editor/image_editor.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 import '../../configs/image_picker_configs.dart';
+import '../../configs/translate_config.dart';
 import '../../utils/time_utils.dart';
 import '../common/custom_track_shape.dart';
 import '../common/portrait_mode_mixin.dart';
@@ -153,12 +154,16 @@ class _ImageEditState extends State<ImageEdit>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                      "${_configs.translations.textContrast}: "
+                      "${_configs.tr(IPMessage.imageEditContrast)}: "
                       "${_contrast.toString()}",
                       style: textStyle),
-                  Text("${_configs.translations.textBrightness}: $_brightness",
+                  Text(
+                      "${_configs.tr(IPMessage.imageEditBrightness)}: "
+                      "$_brightness",
                       style: textStyle),
-                  Text("${_configs.translations.textSaturation}: $_saturation",
+                  Text(
+                      "${_configs.tr(IPMessage.imageEditSaturation)}: "
+                      "$_saturation",
                       style: textStyle),
                   const Icon(Icons.keyboard_arrow_up)
                 ])),
@@ -267,7 +272,7 @@ class _ImageEditState extends State<ImageEdit>
       padding: const EdgeInsets.all(8),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          Text(_configs.translations.textContrast, style: textStyle),
+          Text(_configs.tr(IPMessage.imageEditContrast), style: textStyle),
           const Spacer(),
           Text(_contrast.toString(), style: textStyle)
         ]),
@@ -303,7 +308,7 @@ class _ImageEditState extends State<ImageEdit>
       padding: const EdgeInsets.all(8),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          Text(_configs.translations.textBrightness, style: textStyle),
+          Text(_configs.tr(IPMessage.imageEditBrightness), style: textStyle),
           const Spacer(),
           Text(_brightness.toString(), style: textStyle)
         ]),
@@ -339,7 +344,7 @@ class _ImageEditState extends State<ImageEdit>
       padding: const EdgeInsets.all(8),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          Text(_configs.translations.textSaturation, style: textStyle),
+          Text(_configs.tr(IPMessage.imageEditSaturation), style: textStyle),
           const Spacer(),
           Text(_saturation.toString(), style: textStyle)
         ]),
