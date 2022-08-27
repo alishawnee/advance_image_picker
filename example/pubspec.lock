@@ -7,7 +7,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.1.5+5"
+    version: "0.1.7"
   archive:
     dependency: transitive
     description:
@@ -21,7 +21,11 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.8.2"
+=======
+    version: "2.9.0"
+>>>>>>> upstream/master
   boolean_selector:
     dependency: transitive
     description:
@@ -35,6 +39,7 @@ packages:
       name: camera
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.10.0+1"
   camera_android:
     dependency: transitive
@@ -50,6 +55,9 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.8+3"
+=======
+    version: "0.9.7+1"
+>>>>>>> upstream/master
   camera_platform_interface:
     dependency: transitive
     description:
@@ -169,7 +177,11 @@ packages:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.13.5"
+=======
+    version: "0.13.4"
+>>>>>>> upstream/master
   http_parser:
     dependency: transitive
     description:
@@ -183,35 +195,55 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "3.2.0"
+=======
+    version: "3.1.3"
+>>>>>>> upstream/master
   image_cropper:
     dependency: transitive
     description:
       name: image_cropper
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "3.0.0"
+=======
+    version: "2.0.3"
+>>>>>>> upstream/master
   image_cropper_for_web:
     dependency: transitive
     description:
       name: image_cropper_for_web
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.0.2"
+=======
+    version: "0.0.4"
+>>>>>>> upstream/master
   image_cropper_platform_interface:
     dependency: transitive
     description:
       name: image_cropper_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "3.0.2"
+=======
+    version: "2.0.0"
+>>>>>>> upstream/master
   image_editor:
     dependency: transitive
     description:
       name: image_editor
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.1.0"
+=======
+    version: "1.0.2"
+>>>>>>> upstream/master
   intl:
     dependency: "direct main"
     description:
@@ -260,28 +292,44 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.0.11"
+=======
+    version: "2.0.10"
+>>>>>>> upstream/master
   path_provider_android:
     dependency: transitive
     description:
       name: path_provider_android
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.0.17"
+=======
+    version: "2.0.9"
+>>>>>>> upstream/master
   path_provider_ios:
     dependency: transitive
     description:
       name: path_provider_ios
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.0.11"
+=======
+    version: "2.0.7"
+>>>>>>> upstream/master
   path_provider_linux:
     dependency: transitive
     description:
       name: path_provider_linux
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.1.7"
+=======
+    version: "2.1.2"
+>>>>>>> upstream/master
   path_provider_macos:
     dependency: transitive
     description:
@@ -302,7 +350,11 @@ packages:
       name: path_provider_windows
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.1.2"
+=======
+    version: "2.0.5"
+>>>>>>> upstream/master
   petitparser:
     dependency: transitive
     description:
@@ -316,7 +368,11 @@ packages:
       name: photo_manager
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.2.1"
+=======
+    version: "2.1.2"
+>>>>>>> upstream/master
   photo_view:
     dependency: transitive
     description:
@@ -442,5 +498,10 @@ packages:
     source: hosted
     version: "6.1.0"
 sdks:
+<<<<<<< HEAD
   dart: ">=2.17.0 <3.0.0"
   flutter: ">=3.0.0"
+=======
+  dart: ">=2.17.0-0 <3.0.0"
+  flutter: ">=2.8.0"
+>>>>>>> upstream/master

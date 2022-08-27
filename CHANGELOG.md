@@ -1,3 +1,24 @@
+## [0.1.7+1]
+
+* **Update:**
+  * Fix required dart version
+
+## [0.1.7]
+
+* **Update:**
+  * Upgrade packages
+  * Support for flutter 3.x
+
+## [0.1.6+1]
+
+* **Update:**
+  * Update readme
+
+## [0.1.6]
+
+* **Update:**
+  * Camera, photo manager packages
+
 ## [0.1.5+5]
 
 * **Fixbugs:**

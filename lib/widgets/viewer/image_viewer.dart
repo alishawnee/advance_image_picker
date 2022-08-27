@@ -98,14 +98,14 @@ class _ImageViewerState extends State<ImageViewer>
           title: _configs.tr(IPMessage.imageCropTitle),
           icon: Icons.crop_rotate,
           onEditorEvent: (
-                  {required BuildContext context,
-                  required File file,
-                  required String title,
-                  int maxWidth = 1080,
-                  int maxHeight = 1920,
-                  int compressQuality = 90,
-                  ImagePickerConfigs? configs}) async =>
-              ImageCropper().cropImage(
+              {required BuildContext context,
+              required File file,
+              required String title,
+              int maxWidth = 1080,
+              int maxHeight = 1920,
+              int compressQuality = 90,
+              ImagePickerConfigs? configs}) async {
+            final CroppedFile? result = await ImageCropper().cropImage(
                 sourcePath: file.path,
                 compressQuality: compressQuality,
                 maxWidth: maxWidth,
@@ -118,15 +118,18 @@ class _ImageViewerState extends State<ImageViewer>
                   CropAspectRatioPreset.ratio16x9
                 ],
                 uiSettings: [
-                  IOSUiSettings(minimumAspectRatio: 1),
                   AndroidUiSettings(
                       toolbarTitle: title,
                       toolbarColor: toolbarColor,
                       toolbarWidgetColor: toolbarWidgetColor,
                       initAspectRatio: CropAspectRatioPreset.original,
-                      lockAspectRatio: false)
-                ],
-              ).then((value) => File(value!.path)));
+                      lockAspectRatio: false),
+                  IOSUiSettings(
+                    minimumAspectRatio: 1,
+                  )
+                ]);
+            return (result != null) ? File(result.path) : file;
+          });
     }
     if (_configs.adjustFeatureEnabled) {
       imageEditors[_configs.tr(IPMessage.imageEditTitle)] = EditorParams(
