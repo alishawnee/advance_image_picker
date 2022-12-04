@@ -14,7 +14,7 @@ Future<bool?> showConfirmDialog({
   bool Function()? onDeny,
 }) {
   final dialogButtonStyle = TextButton.styleFrom(
-    primary: Colors.black87,
+    foregroundColor: Colors.black87,
     minimumSize: const Size(88, 36),
     padding: const EdgeInsets.symmetric(horizontal: 16),
     shape: const RoundedRectangleBorder(

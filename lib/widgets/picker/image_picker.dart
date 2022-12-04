@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
@@ -636,7 +635,7 @@ class _ImagePickerState extends State<ImagePicker>
   Widget _buildZoomRatioButton(BuildContext context) {
     return TextButton(
         style: TextButton.styleFrom(
-          primary: Colors.black12,
+          foregroundColor: Colors.black12,
           minimumSize: const Size(88, 36),
           padding: const EdgeInsets.symmetric(horizontal: 16),
           shape: const CircleBorder(),
@@ -656,7 +655,7 @@ class _ImagePickerState extends State<ImagePicker>
   Widget _buildExposureButton(BuildContext context) {
     return TextButton(
       style: TextButton.styleFrom(
-        primary: Colors.black12,
+        foregroundColor: Colors.black12,
         minimumSize: const Size(88, 36),
         padding: const EdgeInsets.all(4),
         shape: const CircleBorder(),
@@ -680,7 +679,7 @@ class _ImagePickerState extends State<ImagePicker>
   Widget _buildImageFullOption(BuildContext context) {
     return TextButton(
       style: TextButton.styleFrom(
-        primary: Colors.black12,
+        foregroundColor: Colors.black12,
         minimumSize: const Size(88, 36),
         padding: const EdgeInsets.symmetric(horizontal: 16),
         shape: const CircleBorder(),
@@ -1412,14 +1411,16 @@ class _ImagePickerState extends State<ImagePicker>
     if (_cameraController?.value == null) return const SizedBox();
 
     final ButtonStyle styleAuto = TextButton.styleFrom(
-      primary: _cameraController?.value.exposureMode == ExposureMode.auto
-          ? Colors.orange
-          : Colors.white,
+      foregroundColor:
+          _cameraController?.value.exposureMode == ExposureMode.auto
+              ? Colors.orange
+              : Colors.white,
     );
     final ButtonStyle styleLocked = TextButton.styleFrom(
-      primary: _cameraController?.value.exposureMode == ExposureMode.locked
-          ? Colors.orange
-          : Colors.white,
+      foregroundColor:
+          _cameraController?.value.exposureMode == ExposureMode.locked
+              ? Colors.orange
+              : Colors.white,
     );
 
     const textStyle = TextStyle(color: Colors.white);
