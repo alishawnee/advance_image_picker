@@ -306,7 +306,7 @@ class _ImagePickerState extends State<ImagePicker>
         setState(() {});
       }
     }).catchError((e) {
-      LogUtils.log('Camera error ${e.toString()}');
+      LogUtils.log('Camera error $e');
     });
   }
 
@@ -363,7 +363,7 @@ class _ImagePickerState extends State<ImagePicker>
         LogUtils.log('PhotoGallery permission not allowed');
       }
     } catch (e) {
-      LogUtils.log('PhotoGallery error ${e.toString()}');
+      LogUtils.log('PhotoGallery error $e');
     }
   }
 
@@ -715,8 +715,8 @@ class _ImagePickerState extends State<ImagePicker>
         if (widget.maxCount > 1) ...[
           Text(
               '$_textSelectedImagesTitle'
-              '${_selectedImages.length.toString()}'
-              ' / ${widget.maxCount.toString()}',
+              '${_selectedImages.length}'
+              ' / ${widget.maxCount}',
               style: const TextStyle(color: Colors.white, fontSize: 14)),
           if (_configs.tr(IPMessage.selectImagesGuide) != '')
             Text(_configs.tr(IPMessage.selectImagesGuide),
@@ -1348,7 +1348,7 @@ class _ImagePickerState extends State<ImagePicker>
                                         : CameraLensDirection.front);
                             if (newDescription != null) {
                               LogUtils.log("Start new camera: "
-                                  "${newDescription.toString()}");
+                                  "$newDescription");
                               await _onNewCameraSelected(newDescription);
                             }
                           }

@@ -205,7 +205,7 @@ class _ImageViewerState extends State<ImageViewer>
               onTap: () async {
                 final image = await _imagePreProcessing(
                     _images[_currentIndex!].modifiedPath);
-                final File? outputFile = await e.onEditorEvent(
+                final outputFile = await e.onEditorEvent(
                     context: context,
                     file: image,
                     title: e.title,
@@ -510,11 +510,14 @@ class _ImageViewerState extends State<ImageViewer>
                                   margin: const EdgeInsets.symmetric(
                                       vertical: 2, horizontal: 4),
                                   child: Text(
-                                      "${e.label}:${e.confidence?.toStringAsFixed(2) ?? ""}",
-                                      style: TextStyle(
-                                          color: isSelected
-                                              ? Colors.white
-                                              : Colors.grey)),
+                                    "${e.label}:"
+                                    "${e.confidence?.toStringAsFixed(2) ?? ""}",
+                                    style: TextStyle(
+                                      color: isSelected
+                                          ? Colors.white
+                                          : Colors.grey,
+                                    ),
+                                  ),
                                 ),
                               );
                             }).toList()),

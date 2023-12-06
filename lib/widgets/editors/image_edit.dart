@@ -130,8 +130,9 @@ class _ImageEditState extends State<ImageEdit>
                   _controlExpanded = false;
                 });
               },
-              child: Row(
-                  children: const [Spacer(), Icon(Icons.keyboard_arrow_down)]),
+              child: const Row(
+                children: [Spacer(), Icon(Icons.keyboard_arrow_down)],
+              ),
             ),
             const Divider(),
             _buildContrastAdjustControl(context),
@@ -155,7 +156,7 @@ class _ImageEditState extends State<ImageEdit>
                 children: [
                   Text(
                       "${_configs.tr(IPMessage.imageEditContrast)}: "
-                      "${_contrast.toString()}",
+                      "$_contrast",
                       style: textStyle),
                   Text(
                       "${_configs.tr(IPMessage.imageEditBrightness)}: "
