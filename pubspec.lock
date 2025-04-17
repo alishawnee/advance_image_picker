@@ -129,10 +129,11 @@ packages:
   flutter_native_image_v2:
     dependency: "direct main"
     description:
-      name: flutter_native_image_v2
-      sha256: "9b23f8b1a7efc759dfaa17f171ba4748bd2a0c1fac92fef22302aafd90442f3d"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "07ae36dfe621f4a18e454df4218e974efc24e5d6"
+      url: "https://github.com/alishawnee/flutter_native_image_v2.git"
+    source: git
     version: "1.0.0+2"
   flutter_plugin_android_lifecycle:
     dependency: transitive

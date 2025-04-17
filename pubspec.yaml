@@ -13,7 +13,9 @@ dependencies:
   camera: ^0.11.1
   flutter:
     sdk: flutter
-  flutter_native_image_v2: ^1.0.0+2
+  flutter_native_image_v2:
+    git: https://github.com/alishawnee/flutter_native_image_v2.git
+  # flutter_native_image_v2: ^1.0.0+2
   image: ^4.5.4
   image_cropper: ^9.1.0
   image_editor: ^1.0.2
