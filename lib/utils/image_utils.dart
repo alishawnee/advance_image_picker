@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:flutter_native_image/flutter_native_image.dart';
+import 'package:flutter_native_image_v2/flutter_native_image_v2.dart';
 import 'package:image/image.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -17,8 +17,12 @@ class ImageUtils {
 
   /// Compare & resize image file in [path].
   /// Pass [quality], [maxWidth], [maxHeight] for output image file.
-  static Future<File> compressResizeImage(String path,
-      {int quality = 90, int maxWidth = 1080, int maxHeight = 1920}) async {
+  static Future<File> compressResizeImage(
+    String path, {
+    int quality = 90,
+    int maxWidth = 1080,
+    int maxHeight = 1920,
+  }) async {
     // Get image properties
     final ImageProperties properties =
         await FlutterNativeImage.getImageProperties(path);
@@ -47,10 +51,12 @@ class ImageUtils {
       }
 
       // Compress output file.
-      final File compressedFile = await FlutterNativeImage.compressImage(path,
-          quality: quality,
-          targetWidth: outputWidth,
-          targetHeight: outputHeight);
+      final File compressedFile = await FlutterNativeImage.compressImage(
+        path,
+        quality: quality,
+        targetWidth: outputWidth,
+        targetHeight: outputHeight,
+      );
       return compressedFile;
     }
 
@@ -58,11 +64,13 @@ class ImageUtils {
   }
 
   /// Crop image file in [path].
-  static Future<File> cropImage(String path,
-      {int originX = 0,
-      int originY = 0,
-      required double widthPercent,
-      required double heightPercent}) async {
+  static Future<File> cropImage(
+    String path, {
+    int originX = 0,
+    int originY = 0,
+    required double widthPercent,
+    required double heightPercent,
+  }) async {
     // Get image properties.
     final ImageProperties properties =
         await FlutterNativeImage.getImageProperties(path);
@@ -88,7 +96,12 @@ class ImageUtils {
       y = ((1.0 - hPercent) * height).toInt();
     }
     return FlutterNativeImage.cropImage(
-        path, x, y, (wPercent * width).toInt(), (hPercent * height).toInt());
+      path,
+      x,
+      y,
+      (wPercent * width).toInt(),
+      (hPercent * height).toInt(),
+    );
   }
 
   /// Get temp file created in temporary directory of device.
